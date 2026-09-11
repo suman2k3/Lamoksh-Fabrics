@@ -54,7 +54,7 @@ export function ProductCard({ product, className }: { product: Product; classNam
                 addToCart(product.handle, 1, product.sizes?.[0]);
               }
             }}
-            className="grid h-11 w-11 place-items-center rounded-full bg-background/95 text-foreground shadow-md transition-all duration-300 hover:scale-110 hover:bg-foreground hover:text-background focus-visible:scale-110 disabled:opacity-40"
+            className="grid h-11 w-11 place-items-center rounded-full bg-white text-[#1C1917] shadow-md transition-all duration-300 hover:scale-110 hover:bg-[#6B1D2F] hover:text-white focus-visible:scale-110 disabled:opacity-40"
           >
             <ShoppingBag className="h-4.5 w-4.5" />
           </button>
@@ -65,7 +65,7 @@ export function ProductCard({ product, className }: { product: Product; classNam
             params={{ handle: product.handle }}
             title="Quick view"
             aria-label="Quick view"
-            className="grid h-11 w-11 place-items-center rounded-full bg-background/95 text-foreground shadow-md transition-all duration-300 hover:scale-110 hover:bg-foreground hover:text-background focus-visible:scale-110"
+            className="grid h-11 w-11 place-items-center rounded-full bg-white text-[#1C1917] shadow-md transition-all duration-300 hover:scale-110 hover:bg-[#6B1D2F] hover:text-white focus-visible:scale-110"
           >
             <Eye className="h-4.5 w-4.5" />
           </Link>
@@ -80,9 +80,9 @@ export function ProductCard({ product, className }: { product: Product; classNam
               e.stopPropagation();
               toggleWishlist(product.handle);
             }}
-            className="grid h-11 w-11 place-items-center rounded-full bg-background/95 text-foreground shadow-md transition-all duration-300 hover:scale-110 hover:bg-foreground hover:text-background focus-visible:scale-110"
+            className="grid h-11 w-11 place-items-center rounded-full bg-white text-[#1C1917] shadow-md transition-all duration-300 hover:scale-110 hover:bg-[#6B1D2F] hover:text-white focus-visible:scale-110"
           >
-            <Heart className={cn("h-4.5 w-4.5", saved && "fill-current text-burgundy")} />
+            <Heart className={cn("h-4.5 w-4.5", saved && "fill-current text-[#6B1D2F]")} />
           </button>
         </div>
       </div>

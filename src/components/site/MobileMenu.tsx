@@ -73,18 +73,18 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       {/* Side Navigation Drawer (Left Aligned, 82vw max 340px) */}
       <div
         className={cn(
-          "fixed top-0 left-0 bottom-0 z-[999999] flex flex-col bg-[#FAF8F5] text-[#28201C] shadow-2xl transition-transform duration-300 ease-out",
+          "fixed top-0 left-0 bottom-0 z-[999999] flex flex-col bg-white text-[#1C1917] shadow-2xl transition-transform duration-300 ease-out border-r border-[#E7E5E4]",
           animateIn ? "translate-x-0" : "-translate-x-full",
         )}
         style={{
           width: "min(82vw, 340px)",
           height: "100dvh",
-          backgroundColor: "#FAF8F5",
+          backgroundColor: "#ffffff",
         }}
       >
-        {/* Dark Espresso Drawer Header */}
-        <div className="sticky top-0 z-10 flex h-16 shrink-0 items-center justify-between bg-espresso px-5 text-ivory">
-          <span className="font-serif text-lg font-semibold uppercase tracking-wider text-ivory">
+        {/* Logo Burgundy Drawer Header */}
+        <div className="sticky top-0 z-10 flex h-16 shrink-0 items-center justify-between bg-[#6B1D2F] px-5 text-white">
+          <span className="font-serif text-lg font-semibold uppercase tracking-wider text-white">
             Menu
           </span>
           <button

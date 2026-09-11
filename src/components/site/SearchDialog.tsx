@@ -105,10 +105,10 @@ export function SearchDialog() {
       {/* Top-Anchored Luxury Search Panel */}
       <div
         className={cn(
-          "relative z-[999999] flex max-h-[65vh] w-full flex-col overflow-hidden border-b border-[#28201C]/15 bg-[#FAF8F5] text-[#28201C] shadow-2xl transition-transform duration-300 ease-out",
+          "relative z-[999999] flex max-h-[65vh] w-full flex-col overflow-hidden border-b border-[#E7E5E4] bg-white text-[#1C1917] shadow-2xl transition-transform duration-300 ease-out",
           animateIn ? "translate-y-0" : "-translate-y-full",
         )}
-        style={{ backgroundColor: "#FAF8F5", color: "#28201C" }}
+        style={{ backgroundColor: "#ffffff", color: "#1C1917" }}
       >
         {/* Panel Header */}
         <div className="container-lux flex h-14 shrink-0 items-center justify-between border-b border-[#28201C]/10 pt-2">

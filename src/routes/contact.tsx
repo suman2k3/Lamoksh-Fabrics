@@ -55,9 +55,9 @@ function ContactPage() {
       </section>
 
       {/* Main Luxury Contact Form & Details Section */}
-      <section className="relative overflow-hidden border-b border-[#28201C]/10 bg-[#FAF8F5]">
+      <section className="relative overflow-hidden border-b border-[#E7E5E4] bg-white">
         {/* Fine Textile Weave Texture & Soft Shadow Overlay */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#28201C_0.35px,transparent_0.35px)] [background-size:24px_24px] opacity-15" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#1C1917_0.3px,transparent_0.3px)] [background-size:24px_24px] opacity-10" />
 
         {/* Soft Luxury Textile Watermark Background on Right */}
         <div className="pointer-events-none absolute bottom-0 right-0 top-0 hidden w-1/2 overflow-hidden opacity-[0.06] grayscale filter md:block">

@@ -65,43 +65,58 @@
 :root {
   --radius: 0px;
 
-  --ivory: oklch(0.977 0.006 85);
-  --champagne: oklch(0.928 0.021 83);
-  --beige: oklch(0.897 0.018 80);
-  --taupe: oklch(0.72 0.018 70);
-  --espresso: oklch(0.268 0.021 45);
-  --gold: oklch(0.66 0.078 78);
+  /* Brand Theme Colors based on Logo Burgundy & Clean White */
   --burgundy: oklch(0.36 0.093 20);
-  --charcoal: oklch(0.32 0.008 60);
+  --burgundy-dark: oklch(0.28 0.08 20);
+  --white: #ffffff;
+  --off-white: #faf9f6;
+  --charcoal: #1c1917;
+  --charcoal-muted: #57534e;
+  --light-grey: #e7e5e4;
+  --light-grey-subtle: #f5f5f4;
 
-  --background: var(--ivory);
-  --foreground: var(--espresso);
-  --card: oklch(0.99 0.004 85);
-  --card-foreground: var(--espresso);
-  --popover: var(--ivory);
-  --popover-foreground: var(--espresso);
-  --primary: var(--espresso);
-  --primary-foreground: var(--ivory);
-  --secondary: var(--champagne);
-  --secondary-foreground: var(--espresso);
-  --muted: oklch(0.945 0.011 84);
-  --muted-foreground: oklch(0.52 0.016 60);
-  --accent: var(--gold);
-  --accent-foreground: var(--espresso);
+  /* Mappings */
+  --ivory: #ffffff;
+  --champagne: var(--off-white);
+  --beige: var(--light-grey-subtle);
+  --taupe: var(--charcoal-muted);
+  --espresso: var(--burgundy);
+  --gold: var(--burgundy);
+
+  --background: var(--white);
+  --foreground: var(--charcoal);
+  --card: var(--white);
+  --card-foreground: var(--charcoal);
+  --popover: var(--white);
+  --popover-foreground: var(--charcoal);
+
+  --primary: var(--burgundy);
+  --primary-foreground: var(--white);
+
+  --secondary: var(--off-white);
+  --secondary-foreground: var(--charcoal);
+
+  --muted: var(--light-grey-subtle);
+  --muted-foreground: var(--charcoal-muted);
+
+  --accent: var(--burgundy);
+  --accent-foreground: var(--white);
+
   --destructive: oklch(0.5 0.16 25);
-  --destructive-foreground: var(--ivory);
-  --border: oklch(0.884 0.013 80);
-  --input: oklch(0.884 0.013 80);
-  --ring: var(--gold);
+  --destructive-foreground: var(--white);
 
-  --sidebar: var(--ivory);
-  --sidebar-foreground: var(--espresso);
-  --sidebar-primary: var(--espresso);
-  --sidebar-primary-foreground: var(--ivory);
-  --sidebar-accent: var(--champagne);
-  --sidebar-accent-foreground: var(--espresso);
-  --sidebar-border: oklch(0.884 0.013 80);
-  --sidebar-ring: var(--gold);
+  --border: var(--light-grey);
+  --input: var(--light-grey);
+  --ring: var(--burgundy);
+
+  --sidebar: var(--white);
+  --sidebar-foreground: var(--charcoal);
+  --sidebar-primary: var(--burgundy);
+  --sidebar-primary-foreground: var(--white);
+  --sidebar-accent: var(--off-white);
+  --sidebar-accent-foreground: var(--charcoal);
+  --sidebar-border: var(--light-grey);
+  --sidebar-ring: var(--burgundy);
 }
 
 @layer base {
@@ -134,8 +149,8 @@
   }
 
   ::selection {
-    background: var(--gold);
-    color: var(--ivory);
+    background: var(--burgundy);
+    color: #ffffff;
   }
 }
 
@@ -208,7 +223,7 @@
     width: 2.5rem;
     height: 1px;
     margin-top: 1.25rem;
-    background: var(--gold);
+    background: var(--burgundy);
   }
 }
 
@@ -243,17 +258,18 @@
   padding: 0.95rem 2.1rem;
   font-family: var(--font-sans);
   font-size: 0.6875rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  background: var(--espresso);
-  color: var(--ivory);
-  border: 1px solid var(--espresso);
-  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  background: var(--burgundy);
+  color: #ffffff;
+  border: 1px solid var(--burgundy);
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 
   &:hover {
-    background: transparent;
-    color: var(--espresso);
+    background: var(--burgundy-dark);
+    border-color: var(--burgundy-dark);
+    color: #ffffff;
   }
 }
 
@@ -265,21 +281,21 @@
   padding: 0.95rem 2.1rem;
   font-family: var(--font-sans);
   font-size: 0.6875rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  background: transparent;
-  color: currentColor;
-  border: 1px solid currentColor;
-  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  background: #ffffff;
+  color: var(--burgundy);
+  border: 1px solid var(--burgundy);
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 
   &:hover {
-    background: currentColor;
+    background: var(--burgundy);
+    color: #ffffff;
   }
 
   &:hover > span {
-    color: var(--ivory);
-    mix-blend-mode: difference;
+    color: #ffffff;
   }
 }
 
