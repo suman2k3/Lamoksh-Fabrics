@@ -1,8 +1,12 @@
-import { useMemo, useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import { Facebook, Instagram, Play } from "lucide-react";
+import reel1Video from "@/assets/✨ Elegance, Reimagined in Fusion ✨Presenting this exquisite ensemble, beautifully crafted in LaM.mp4";
+import reel2Video from "@/assets/Ladies, yeh mauka mat khona! 😍Saree khareedo & Suit FREE paao! ✔Aur bhi BOHOT saare exclusive o.mp4";
+import reel3Video from "@/assets/New Arrival Alert Exhibition is live!Bringing elegance straight to your wardrobe Presenting our.mp4";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Reveal } from "@/components/site/Reveal";
-import { images, products, type Product } from "@/data/catalog";
+import { images, products } from "@/data/catalog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,6 +31,181 @@ export const Route = createFileRoute("/")({
 });
 
 type Sort = "featured" | "price-asc" | "price-desc" | "new";
+
+interface ReelItem {
+  id: string;
+  url: string;
+  title: string;
+  poster: string;
+  videoSrc: string;
+}
+
+const INSTAGRAM_REELS: ReelItem[] = [
+  {
+    id: "DcmDmx6Plbz",
+    url: "https://www.instagram.com/reels/DcmDmx6Plbz/",
+    title: "Elegance, Reimagined in Fusion — Handcrafted Atelier Collection",
+    poster: images.catNew,
+    videoSrc: reel1Video,
+  },
+  {
+    id: "DRjYjEeD8hL",
+    url: "https://www.instagram.com/reels/DRjYjEeD8hL/",
+    title: "Exclusive Saree & Suit Edits — Atelier Festive Collection",
+    poster: images.heroCampaign,
+    videoSrc: reel2Video,
+  },
+  {
+    id: "DOi3VXvDIRP",
+    url: "https://www.instagram.com/reels/DOi3VXvDIRP/",
+    title: "New Arrival Exhibition — Contemporary Luxury Wardrobe",
+    poster: images.catWedding,
+    videoSrc: reel3Video,
+  },
+];
+
+function ReelCard({ reel }: { reel: ReelItem }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (videoRef.current) {
+              videoRef.current.play().catch(() => {});
+            }
+          } else {
+            if (videoRef.current) {
+              videoRef.current.pause();
+            }
+          }
+        });
+      },
+      { threshold: 0.2 },
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="group relative aspect-[9/16] min-h-[480px] sm:min-h-[520px] md:min-h-[560px] max-h-[620px] w-[82vw] shrink-0 snap-center overflow-hidden rounded-sm border border-[#E7E5E4] bg-[#1C1917] shadow-sm transition-all duration-300 hover:shadow-md sm:w-[320px] md:w-full md:shrink"
+    >
+      {/* Autoplay Video Stream */}
+      <video
+        ref={videoRef}
+        poster={reel.poster}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+      >
+        <source src={reel.videoSrc} type="video/mp4" />
+      </video>
+
+      {/* Top Header Overlay: Handle & Instagram Icon */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-center justify-between bg-gradient-to-b from-black/75 via-black/30 to-transparent p-4 text-white">
+        <span className="font-sans text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-white/95">
+          @lamokshfabrics
+        </span>
+        <Instagram className="h-4 w-4 text-white" />
+      </div>
+
+      {/* Subtle Visual Darkening Overlay on Hover */}
+      <div className="pointer-events-none absolute inset-0 z-10 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
+
+      {/* Bottom Title Bar & Instagram Link Option */}
+      <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col justify-end bg-gradient-to-t from-black/85 via-black/50 to-transparent p-4 text-white">
+        <p className="line-clamp-2 font-serif text-sm font-light leading-snug text-white/95">
+          {reel.title}
+        </p>
+
+        {/* External Link Option: ONLY opens when user clicks this link */}
+        <div className="mt-3 overflow-hidden">
+          <a
+            href={reel.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View ${reel.title} on Instagram`}
+            className="inline-flex items-center gap-1.5 font-sans text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-white/90 underline underline-offset-4 decoration-white/40 transition-colors hover:text-white hover:decoration-white"
+          >
+            <span>VIEW ON INSTAGRAM &rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function InstagramReelsSection() {
+  return (
+    <section className="mt-28 border-t border-[#E7E5E4] bg-white py-20 md:py-28">
+      <div className="container-lux">
+        {/* Header Section */}
+        <div className="mx-auto max-w-2xl text-center">
+          <Reveal>
+            <p className="eyebrow text-[#6B1D2F]">FOLLOW OUR STORY</p>
+            <h2 className="mt-3 font-serif text-3xl font-normal text-[#1C1917] sm:text-4xl md:text-5xl">
+              Step into our world
+            </h2>
+            <p className="mt-4 font-sans text-sm leading-relaxed text-[#57534E]">
+              Discover our latest stories, craftsmanship and moments from the atelier.
+            </p>
+          </Reveal>
+        </div>
+
+        {/* Reels Content Grid / Swipeable Carousel on Mobile */}
+        <div className="mt-12 md:mt-16">
+          <div className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 md:grid md:grid-cols-3 md:gap-8 md:px-0 md:pb-0">
+            {INSTAGRAM_REELS.map((reel) => (
+              <Reveal key={reel.id}>
+                <ReelCard reel={reel} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+
+        {/* Social CTA Buttons */}
+        <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row md:mt-16">
+          <a
+            href="https://www.instagram.com/lamokshfabrics"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Follow LaMoksh Fabrics on Instagram"
+            className="inline-flex w-full items-center justify-center gap-2.5 bg-[#6B1D2F] px-8 py-3.5 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-[#4D1220] sm:w-auto"
+          >
+            <Instagram className="h-4 w-4" />
+            <span>FOLLOW ON INSTAGRAM</span>
+          </a>
+
+          <a
+            href="https://www.facebook.com/LamokshFabrics/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Follow LaMoksh Fabrics on Facebook"
+            className="inline-flex w-full items-center justify-center gap-2.5 border border-[#6B1D2F] bg-white px-8 py-3.5 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-[#6B1D2F] transition-colors hover:bg-[#6B1D2F] hover:text-white sm:w-auto"
+          >
+            <Facebook className="h-4 w-4" />
+            <span>FOLLOW ON FACEBOOK</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export function ClothingHomePage() {
   const allClothing = useMemo(() => products.filter((p) => p.category === "clothing"), []);
@@ -74,8 +253,6 @@ export function ClothingHomePage() {
           </Reveal>
         </div>
       </section>
-
-      {/* House Statement */}
 
       {/* Main Interactive Clothing Catalog Showcase */}
       <section id="clothing-catalog" className="mt-24 pt-8">
@@ -181,7 +358,10 @@ export function ClothingHomePage() {
         </Reveal>
       </section>
 
-      {/* Service Pillars */}
+      {/* Instagram Reels Showcase Section */}
+      <InstagramReelsSection />
+
+      {/* Service Pillars (Burgundy Benefits Section) */}
       <section className="container-lux mt-28">
         <div className="rounded-sm bg-espresso px-8 py-12 text-ivory md:px-12 md:py-16">
           <div className="grid gap-10 md:grid-cols-3">
