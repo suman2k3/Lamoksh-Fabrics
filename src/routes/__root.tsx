@@ -1,5 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Outlet, Link, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
+import {
+  Outlet,
+  Link,
+  createRootRouteWithContext,
+  useRouter,
+  useRouterState,
+} from "@tanstack/react-router";
 
 import { ShopProvider } from "@/lib/shop-store";
 import { Header } from "@/components/site/Header";
@@ -57,18 +63,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isAdminRoute = pathname.startsWith("/admin");
 
   return (
     <QueryClientProvider client={queryClient}>
       <ShopProvider>
-        <Header />
-        <main>
-          {/* Required: nested routes render here. */}
-          <Outlet />
-        </main>
-        <Footer />
-        <CartDrawer />
-        <SearchDialog />
+        {isAdminRoute ? (
+          <main className="min-h-screen bg-[#FAF8F5]">
+            <Outlet />
+          </main>
+        ) : (
+          <>
+            <Header />
+            <main>
+              <Outlet />
+            </main>
+            <Footer />
+            <CartDrawer />
+            <SearchDialog />
+          </>
+        )}
       </ShopProvider>
     </QueryClientProvider>
   );

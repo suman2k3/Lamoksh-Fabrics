@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { products, type Product } from "@/data/catalog";
+import { dbStore } from "@/lib/db/store";
 
 export type CartLine = { handle: string; qty: number; size?: string | undefined };
 
@@ -20,6 +21,7 @@ type ShopState = {
   addToCart: (handle: string, qty?: number, size?: string) => void;
   setQty: (handle: string, qty: number) => void;
   removeLine: (handle: string) => void;
+  clearCart: () => void;
   toggleWishlist: (handle: string) => void;
   markViewed: (handle: string) => void;
   setCartOpen: (v: boolean) => void;
@@ -47,11 +49,16 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const [recent, setRecent] = useState<string[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [dbVersion, setDbVersion] = useState(0);
 
   useEffect(() => {
     setCart(read<CartLine[]>("mn.cart", []));
     setWishlist(read<string[]>("mn.wishlist", []));
     setRecent(read<string[]>("mn.recent", []));
+
+    const onDbUpdate = () => setDbVersion((v) => v + 1);
+    window.addEventListener("manmayi_db_updated", onDbUpdate);
+    return () => window.removeEventListener("manmayi_db_updated", onDbUpdate);
   }, []);
 
   useEffect(() => {
@@ -90,6 +97,10 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     setCart((prev) => prev.filter((l) => l.handle !== handle));
   }, []);
 
+  const clearCart = useCallback(() => {
+    setCart([]);
+  }, []);
+
   const toggleWishlist = useCallback((handle: string) => {
     setWishlist((prev) =>
       prev.includes(handle) ? prev.filter((h) => h !== handle) : [handle, ...prev],
@@ -100,16 +111,15 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     setRecent((prev) => [handle, ...prev.filter((h) => h !== handle)].slice(0, 8));
   }, []);
 
-  const lines = useMemo(
-    () =>
-      cart
-        .map((l) => {
-          const product = products.find((p) => p.handle === l.handle);
-          return product ? { product, qty: l.qty, size: l.size } : null;
-        })
-        .filter(Boolean) as { product: Product; qty: number; size?: string | undefined }[],
-    [cart],
-  );
+  const lines = useMemo(() => {
+    const currentProducts = dbStore.getProducts();
+    return cart
+      .map((l) => {
+        const product = currentProducts.find((p) => p.handle === l.handle || p.id === l.handle) || products.find((p) => p.handle === l.handle);
+        return product ? { product, qty: l.qty, size: l.size } : null;
+      })
+      .filter(Boolean) as { product: Product; qty: number; size?: string | undefined }[];
+  }, [cart, dbVersion]);
 
   const value: ShopState = {
     cart,
@@ -120,6 +130,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     addToCart,
     setQty,
     removeLine,
+    clearCart,
     toggleWishlist,
     markViewed,
     setCartOpen,
